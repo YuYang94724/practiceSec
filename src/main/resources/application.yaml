@@ -1,0 +1,79 @@
+spring:
+#  profiles:
+#    active: ide
+  #    active: arm
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://Localhost:5432/Local_fbedi_db
+    username: epsap
+    password: 111111
+
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+#    Spring.mvc.static-path-pattern 是 Spring MVC 靜態資源訪問路徑的配置
+#  mvc:
+#    static-path-pattern: /**
+#    web.resources.static-locations 是 Spring Boot 靜態資源根目錄的配置
+#web:
+#  resources:
+#    static-locations: /static/**
+
+#  view:
+#    prefix: /static/
+#    suffix: .html
+
+#  mvc:
+#    static-path-pattern: classpath:/static/**
+#    view:
+#      prefix: classpath:/static/**
+#      suffix: .html
+
+  jpa:
+#    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: none
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/test
+      database: test
+      username: mydatabaseuser
+      password: mydatabasepass
+  redis:
+    host: localhost
+    port: 6379
+#    password: mypassword
+    timeout: 5000
+    key-prefix: pureBackendPractice
+#    properties:
+#      hibernate:
+#        format_sql: true
+#        Spring Boot 的健康檢查端點，看他是否有異常
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: DEBUG
+        type:
+          descriptor:
+            sql:
+#              為java綁定SQL中參數的log，設定為TRACE
+              BasicBinder: TRACE
+springdoc:
+  swagger-ui:
+#    表示預設不展開任何文檔節點，只顯示節點的標題
+    doc-expansion: none
+#    設置 Swagger UI 中的操作排序方式，按照字母順序排序
+    operations-sorter: alpha
+#    設置 Swagger UI 中的標籤排序方式，按照字母順序排序
+    tags-sorter: alpha
+
+custom:
+  avatar:
+    uri: https://random.dog/woof

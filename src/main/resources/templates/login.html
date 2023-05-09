@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+          crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"
+            integrity="sha384-hfv/+TnaZvMvIbKa0ZsPnAuken4CZPVoFaC2w6AdNE1i+2bc0Un/6ZmhvlTh6L3U"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <h1>Login</h1>
+            <form action="/selflogin" method="post">
+                <div class="form-group">
+                    <label for="username">Username:</label>
+                    <input type="text" class="form-control" id="username" name="username">
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" class="form-control" id="password" name="password">
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+<script>
+    const loginForm = document.querySelector('form');
+    const jwtTokenKey = 'jwtToken';
+
+    loginForm.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const formData = new FormData(loginForm);
+        const response = await fetch('/selflogin', {
+            method: 'POST',
+            body: formData,
+        });
+
+        if (response.ok) {
+            const jwtToken = response.headers.get('Authorization');
+            if (jwtToken) {
+                localStorage.setItem(jwtTokenKey, jwtToken);
+
+                // window.location.href = '/myindex.html';
+                console.log('JWT token saved in local storage.');
+            } else {
+                console.log('No JWT token found in response headers.');
+            }
+        } else {
+            console.log('Login failed.');
+        }
+    });
+</script>
+</html>

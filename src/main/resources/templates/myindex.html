@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<label>我是Index</label>
+<input id="gotoneed" type="button" value="跳轉need.html" />
+</body>
+<script>
+
+    document.addEventListener("DOMContentLoaded", function() {
+        let a = document.querySelector('#gotoneed');
+        let xhr = new XMLHttpRequest();
+        xhr.open('Get','http://localhost:8080/selflogin', true);
+
+        if (a !== null){
+            console.log("抓到button")
+        }else {
+            console.log("抓不到東西")
+        }
+
+        a.addEventListener("click", () =>{
+            let token = localStorage.getItem('token');
+                    if (token) {
+                        xhr.setRequestHeader('Authorization', token);
+                        // 使用 token 進行下一步操作
+                    } else {
+                        console.log('找不到 Authorization header');
+                        return;
+                    }
+
+            xhr.send();
+            // xhr.onreadystatechange = function() {
+            //     if (xhr.readyState == 4 && xhr.status == 200) {
+            //         let token = xhr.getResponseHeader('Authorization');
+            //
+            //         // 檢查 token 是否存在
+            //         if (token) {
+            //             xhr.setRequestHeader('Authorization', token);
+            //             // 使用 token 進行下一步操作
+            //         } else {
+            //             console.log('找不到 Authorization header');
+            //         }
+            //     }
+            // };
+            // xhr.send();
+        })
+    });
+
+</script>
+</html>
